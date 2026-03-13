@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LKPD – Analytical Text & Poster Gallery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --cream: #faf6ef;
+      --ink: #1a1410;
+      --rust: #b84c23;
+      --gold: #c9973a;
+      --sage: #6b7c65;
+      --paper: #f2ead8;
+      --border: #d4c9b0;
+      --muted: #8a7e6e;
+      --card: #fffdf7;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 16px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--ink);
+      color: var(--cream);
+      padding: 36px 40px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        45deg, transparent, transparent 30px,
+        rgba(201,151,58,.06) 30px, rgba(201,151,58,.06) 31px
+      );
+    }
+    .header-inner { position: relative; max-width: 780px; margin: 0 auto; }
+    .school-tag {
+      font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 6px;
+    }
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      line-height: 1.2; color: #fff; margin-bottom: 6px;
+    }
+    header .subtitle {
+      font-size: 13px; color: #b0a898; letter-spacing: .06em;
+    }
+    .corner-deco {
+      position: absolute; right: 0; top: 0; bottom: 0;
+      width: 200px; opacity: .08;
+      background: radial-gradient(ellipse at right center, var(--gold) 0%, transparent 70%);
+    }
+
+    /* ── Main layout ── */
+    main { max-width: 780px; margin: 0 auto; padding: 36px 20px 80px; }
+
+    /* ── Student card ── */
+    .student-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-bottom: 36px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    }
+    .student-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; color: var(--rust);
+      margin-bottom: 16px; letter-spacing: .04em;
+    }
+    .field-group { display: flex; flex-direction: column; gap: 6px; }
+    .field-group label {
+      font-size: 11px; text-transform: uppercase; letter-spacing: .12em;
+      color: var(--muted); font-weight: 600;
+    }
+    select, input[type="text"] {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 7px;
+      background: var(--cream);
+      font-family: 'Source Serif 4', serif;
+      font-size: 15px;
+      color: var(--ink);
+      appearance: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    select:focus, input:focus {
+      outline: none;
+      border-color: var(--rust);
+      box-shadow: 0 0 0 3px rgba(184,76,35,.12);
+    }
+    .select-wrap { position: relative; }
+    .select-wrap::after {
+      content: '▾';
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      color: var(--muted); pointer-events: none; font-size: 13px;
+    }
+
+    /* ── Section header ── */
+    .section-label {
+      display: flex; align-items: center; gap: 14px;
+      margin: 40px 0 20px;
+    }
+    .section-label .badge {
+      background: var(--rust); color: #fff;
+      font-family: 'Playfair Display', serif;
+      font-size: 12px; letter-spacing: .1em;
+      padding: 4px 12px; border-radius: 20px;
+      white-space: nowrap;
+    }
+    .section-label h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem; color: var(--ink);
+    }
+    .section-line { flex: 1; height: 1px; background: var(--border); }
+
+    /* ── Question card ── */
+    .question-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-left: 4px solid var(--gold);
+      border-radius: 10px;
+      padding: 22px 26px;
+      margin-bottom: 20px;
+      transition: box-shadow .2s;
+    }
+    .question-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,.08); }
+    .q-number {
+      font-size: 11px; text-transform: uppercase; letter-spacing: .15em;
+      color: var(--gold); font-weight: 600; margin-bottom: 6px;
+    }
+    .q-text {
+      font-size: 15.5px; color: var(--ink);
+      margin-bottom: 12px; font-weight: 600;
+    }
+    .q-hint {
+      font-size: 13px; color: var(--muted);
+      font-style: italic; background: var(--paper);
+      border-left: 3px solid var(--border);
+      padding: 8px 12px; border-radius: 0 6px 6px 0;
+      margin-bottom: 14px; line-height: 1.5;
+    }
+    .q-hint strong { font-style: normal; color: var(--sage); }
+    textarea {
+      width: 100%; min-height: 100px;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 7px;
+      background: var(--cream);
+      font-family: 'Source Serif 4', serif;
+      font-size: 14.5px; color: var(--ink);
+      resize: vertical; line-height: 1.6;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    textarea:focus {
+      outline: none;
+      border-color: var(--rust);
+      box-shadow: 0 0 0 3px rgba(184,76,35,.12);
+    }
+
+    /* ── Submit ── */
+    .submit-area {
+      margin-top: 44px; text-align: center;
+    }
+    .btn-submit {
+      background: var(--rust); color: #fff;
+      font-family: 'Playfair Display', serif;
+      font-size: 16px; letter-spacing: .06em;
+      padding: 14px 48px; border: none;
+      border-radius: 8px; cursor: pointer;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      box-shadow: 0 4px 14px rgba(184,76,35,.3);
+    }
+    .btn-submit:hover {
+      background: #9e3f1b;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(184,76,35,.38);
+    }
+    .btn-submit:active { transform: translateY(0); }
+    .btn-submit:disabled {
+      background: var(--muted); cursor: not-allowed;
+      box-shadow: none; transform: none;
+    }
+
+    /* ── Toast / Status ── */
+    #status-msg {
+      margin-top: 18px;
+      font-size: 14px; text-align: center;
+      min-height: 22px; color: var(--sage);
+    }
+    #status-msg.error { color: var(--rust); }
+    #status-msg.success { color: var(--sage); font-weight: 600; }
+
+    /* ── Success overlay ── */
+    #success-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(26,20,16,.55);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      align-items: center; justify-content: center;
+    }
+    #success-overlay.show { display: flex; }
+    .success-box {
+      background: var(--card);
+      border: 2px solid var(--gold);
+      border-radius: 16px;
+      padding: 48px 56px;
+      text-align: center;
+      max-width: 420px;
+      animation: popIn .35s cubic-bezier(.34,1.56,.64,1);
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(.8); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    .success-box .check {
+      font-size: 3rem; margin-bottom: 16px;
+    }
+    .success-box h2 {
+      font-family: 'Playfair Display', serif;
+      color: var(--rust); font-size: 1.5rem; margin-bottom: 10px;
+    }
+    .success-box p { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+    .btn-ok {
+      background: var(--ink); color: var(--cream);
+      font-family: 'Playfair Display', serif;
+      font-size: 14px; padding: 10px 32px;
+      border: none; border-radius: 6px; cursor: pointer;
+      transition: background .2s;
+    }
+    .btn-ok:hover { background: #3a2e26; }
+
+    /* ── Progress bar ── */
+    .progress-bar-wrap {
+      background: var(--border); border-radius: 99px;
+      height: 6px; margin: 0 0 28px; overflow: hidden;
+    }
+    #progress-bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--rust), var(--gold));
+      border-radius: 99px; transition: width .4s ease;
+    }
+    .progress-label {
+      font-size: 12px; color: var(--muted);
+      text-align: right; margin-bottom: 4px;
+      letter-spacing: .04em;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 520px) {
+      header { padding: 24px 18px 20px; }
+      main { padding: 24px 12px 60px; }
+      .student-card, .question-card { padding: 18px 16px; }
+      .success-box { padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="corner-deco"></div>
+  <div class="header-inner">
+    <p class="school-tag">Lembar Kerja Peserta Didik · XI P 3</p>
+    <h1>Analytical Text &amp;<br/>Poster Gallery</h1>
+    <p class="subtitle">Critical Reading &amp; Visual Literacy · English · 2024/2025</p>
+  </div>
+</header>
+
+<main>
+
+  <!-- Student Identity -->
+  <div class="student-card">
+    <h2>Student Identity</h2>
+    <div class="field-group">
+      <label for="student-name">Full Name</label>
+      <div class="select-wrap">
+        <select id="student-name" required>
+          <option value="">— Choose your name —</option>
+          <option>Angela Kyla Nathania</option>
+          <option>Chelsea Stevani Yarolo</option>
+          <option>Dinda Anjes</option>
+          <option>Jeselyn Alvira Givenia Leda</option>
+          <option>Terena Nefetiri Gumala</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress -->
+  <p class="progress-label" id="progress-label">Answered: 0 / 18</p>
+  <div class="progress-bar-wrap"><div id="progress-bar"></div></div>
+
+  <!-- ── SECTION A ── -->
+  <div class="section-label">
+    <span class="badge">Section A</span>
+    <h3>Understanding the Author's Idea</h3>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="question-card">
+    <p class="q-number">Question 1</p>
+    <p class="q-text">What is the main argument presented in the poster?</p>
+    <p class="q-hint"><strong>Hint:</strong> The main argument is the central idea or opinion that the author wants readers to believe.</p>
+    <textarea id="q1" placeholder="Write your answer here…"></textarea>
+  </div>
+
+  <div class="question-card">
+    <p class="q-number">Question 2</p>
+    <p class="q-text">Identify the thesis statement of the analytical text. Why do you think this sentence is the thesis?</p>
+    <p class="q-hint"><strong>Hint:</strong> A thesis statement is the main claim or opinion of the author, usually found in the introduction.</p>
+    <textarea id="q2" placeholder="Write your answer here…"></textarea>
+  </div>
+
+  <div class="question-card">
+    <p class="q-number">Question 3</p>
+    <p class="q-text">How does the author support their argument in the text? Mention at least two supporting ideas.</p>
+    <p class="q-hint"><strong>Hint:</strong> Supporting ideas are reasons, facts, or examples that help explain or prove the author's opinion.</p>
+    <textarea id="q3" placeholder="Write your answer here…"></textarea>
+  </div>
+
+  <div class="question-card">
+    <p class="q-number">Question 4</p>
+    <p class="q-text">After listening to the audio explanation, do you think it helps clarify the author's message? Why?</p>
+    <p class="q-hint"><strong>Hint:</strong> <em>Clarify</em> means to make something easier to understand.</p>
+    <textarea id="q4" placeholder="Write your answer here…"></textarea>
+  </div>
+
+  <!-- ── SECTION B ── -->
+  <div class="section-label">
+    <span class="badge">Section B</span>
+    <h3>Analyzing the Visual Elements</h3>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="question-card">
+    <p class="q-number">Question 5</p>
+    <p class="q-text">Look at the image used in the poster. How does the image support the main argument?</p>
+    <p class="q-hint"><strong>Hint:</strong> Think about how the picture helps explain or strengthen the message in the text.</p>
+    <textarea id="q5" placeholder="Write your answer here…"></textarea>
+  </div>
+
+  <div class="question-card">
+    <p class="q-number">Question 6</p>
+    <p class="q-text">Do you think the visual elements make the message stronger? Why or why not?</p>
+    <p class="q-hint"><strong>Hint:</strong> Visual elements include pictures, colors, icons, or design used in the poster.</p>
+    <textarea id="q6" placeholder="Write your answer here…"></textarea>
+  </div>
+
+  <div class="question-card">
+    <p class="q-number">Question 7</p>
+    <p class="q-text">If the poster did not include the image, would the argument still be clear? Explain your opinion.</p>
+    <p class="q-hint"><strong>Hint:</strong> Think about whether the text alone is enough to understand the message.</p>
+    <textarea id="q7" placeholder="Write your answer here…"></textarea>
+  </div>
+
+  <!-- ── SECTION C ── -->
+  <div class="section-label">
+    <span class="badge">Section C</span>
+    <h3>Critical Thinking</h3>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="question-card">
+    <p class="q-number">Question 8</p>
+    <p class="q-text">Do you think the author's argument is convincing? Explain your reasoning.</p>
+    <p class="q-hint"><strong>Hint:</strong> <em>Convincing</em> means able to make people believe or agree with something.</p>
+    <textarea id="q8" placeholder="Write your answer here…"></textarea>
+  </div>
+
+  <div class="question-card">
+    <p class="q-number">Question 9</p>
+    <p class="q-text">Which supporting argument in the text is the strongest? Why?</p>
+    <p class="q-hint"><strong>Hint:</strong> Choose the reason that you think best proves the author's opinion.</p>
+    <textarea id="q9" placeholder="Write your answer here…"></textarea>
+  </div>
+
+  <div class="question-card">
+    <p class="q-number">Question 10</p>
+    <p class="q-text">Is there any part of the text that you disagree with? Explain your opinion.</p>
+    <p class="q-hint"><strong>Hint:</strong> You can express a different opinion from the author.</p>
+    <textarea id="q10" placeholder="Write your answer here…"></textarea>
+  </div>
+
+  <!-- ── SECTION D ── -->
+  <div class="section-label">
+    <span class="badge">Section D</span>
+    <h3>Comparing Posters</h3>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="question-card">
+    <p class="q-number">Question 11</p>
+    <p class="q-text">Choose two posters from the gallery. How are their arguments similar or different?</p>
+    <p class="q-hint"><strong>Hint:</strong> Compare their main ideas, reasons, or messages.</p>
+    <textarea id="q11" placeholder="Write your answer here…"></textarea>
+  </div>
+
+  <div class="question-card">
+    <p class="q-number">Question 12</p>
+    <p class="q-text">Which poster presents the most effective argument? Why?</p>
+    <p class="q-hint"><strong>Hint:</strong> <em>Effective</em> means successful in communicating or persuading the reader.</p>
+    <textarea id="q12" placeholder="Write your answer here…"></textarea>
+  </div>
+
+  <div class="question-card">
+    <p class="q-number">Question 13</p>
+    <p class="q-text">Which poster uses the best combination of text and visual elements?</p>
+    <p class="q-hint"><strong>Hint:</strong> Think about which poster balances information and design well.</p>
+    <textarea id="q13" placeholder="Write your answer here…"></textarea>
+  </div>
+
+  <!-- ── SECTION E ── -->
+  <div class="section-label">
+    <span class="badge">Section E</span>
+    <h3>Reflection</h3>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="question-card">
+    <p class="q-number">Question 15</p>
+    <p class="q-text">If you were the author, what changes would you make to improve the poster?</p>
+    <p class="q-hint"><strong>Hint:</strong> You can suggest changes in the text, images, title, or design.</p>
+    <textarea id="q15" placeholder="Write your answer here…"></textarea>
+  </div>
+
+  <div class="question-card">
+    <p class="q-number">Question 16</p>
+    <p class="q-text">What new idea or perspective did you learn from the gallery?</p>
+    <p class="q-hint"><strong>Hint:</strong> <em>Perspective</em> means a new way of thinking about something.</p>
+    <textarea id="q16" placeholder="Write your answer here…"></textarea>
+  </div>
+
+  <div class="question-card">
+    <p class="q-number">Question 17</p>
+    <p class="q-text">How can the ideas in the posters be applied to real life?</p>
+    <p class="q-hint"><strong>Hint:</strong> Explain how the message relates to daily life or real situations.</p>
+    <textarea id="q17" placeholder="Write your answer here…"></textarea>
+  </div>
+
+  <div class="question-card">
+    <p class="q-number">Question 18</p>
+    <p class="q-text">Which poster influenced your opinion the most? Why?</p>
+    <p class="q-hint"><strong>Hint:</strong> <em>Influenced</em> means it changed or affected the way you think.</p>
+    <textarea id="q18" placeholder="Write your answer here…"></textarea>
+  </div>
+
+  <!-- Submit -->
+  <div class="submit-area">
+    <button class="btn-submit" id="btn-submit" onclick="submitAnswers()">Submit Answers</button>
+    <p id="status-msg"></p>
+  </div>
+
+</main>
+
+<!-- Success overlay -->
+<div id="success-overlay">
+  <div class="success-box">
+    <div class="check">✅</div>
+    <h2>Submitted!</h2>
+    <p>Your answers have been saved to the teacher's spreadsheet.<br/>Well done! 🎉</p>
+    <button class="btn-ok" onclick="document.getElementById('success-overlay').classList.remove('show')">Close</button>
+  </div>
+</div>
+
+<script>
+  // ── CONFIG: Replace with your GAS Web App URL ──────────────────────────────
+  // After deploying your GAS as a Web App (Execute as: Me, Who: Anyone),
+  // paste the deployment URL below.
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbyGqc5Aj0_Nhs1oXK5GBwYLvQEM9mKyAuWpbKg_Qc3sHKKDZSpePIdhY47TdOtt6RyRfg/exec";
+  // ───────────────────────────────────────────────────────────────────────────
+
+  const QUESTION_IDS = ["q1","q2","q3","q4","q5","q6","q7","q8","q9","q10","q11","q12","q13","q15","q16","q17","q18"];
+  const TOTAL = QUESTION_IDS.length;
+
+  // Progress tracking
+  function updateProgress() {
+    let filled = QUESTION_IDS.filter(id => document.getElementById(id).value.trim() !== "").length;
+    document.getElementById("progress-bar").style.width = (filled / TOTAL * 100) + "%";
+    document.getElementById("progress-label").textContent = `Answered: ${filled} / ${TOTAL}`;
+  }
+
+  QUESTION_IDS.forEach(id => {
+    document.getElementById(id).addEventListener("input", updateProgress);
+  });
+
+  // Submit via GAS using no-cors fetch (avoids CORS preflight)
+  function submitAnswers() {
+    const name = document.getElementById("student-name").value.trim();
+    if (!name) {
+      setStatus("⚠️ Please choose your name first.", "error");
+      document.getElementById("student-name").focus();
+      return;
+    }
+
+    // Warn if any question is blank
+    const blanks = QUESTION_IDS.filter(id => document.getElementById(id).value.trim() === "");
+    if (blanks.length > 0) {
+      const proceed = confirm(`You have ${blanks.length} unanswered question(s). Submit anyway?`);
+      if (!proceed) return;
+    }
+
+    const btn = document.getElementById("btn-submit");
+    btn.disabled = true;
+    setStatus("⏳ Submitting your answers…", "");
+
+    // Build payload
+    const payload = { studentName: name, timestamp: new Date().toISOString() };
+    QUESTION_IDS.forEach(id => { payload[id] = document.getElementById(id).value.trim(); });
+
+    // Use no-cors mode + GET (query string) to avoid CORS preflight
+    // GAS handles GET requests natively — no CORS issue
+    const params = new URLSearchParams(payload);
+    const url = GAS_URL + "?" + params.toString();
+
+    fetch(url, { method: "GET", mode: "no-cors" })
+      .then(() => {
+        // no-cors gives opaque response — we assume success if no network error
+        btn.disabled = false;
+        setStatus("", "");
+        document.getElementById("success-overlay").classList.add("show");
+      })
+      .catch(err => {
+        btn.disabled = false;
+        setStatus("❌ Network error. Please check your connection and try again.", "error");
+        console.error(err);
+      });
+  }
+
+  function setStatus(msg, cls) {
+    const el = document.getElementById("status-msg");
+    el.textContent = msg;
+    el.className = cls;
+  }
+</script>
+
+<!--
+  ═══════════════════════════════════════════════════════════════════
+  GOOGLE APPS SCRIPT (GAS) — paste into script.google.com
+  ═══════════════════════════════════════════════════════════════════
+  
+  1. Open your Google Sheet → Extensions → Apps Script
+  2. Replace all code with the script below
+  3. Deploy → New Deployment → Web App
+     - Execute as: Me
+     - Who has access: Anyone
+  4. Copy the Web App URL into GAS_URL above
+
+  ─── GAS CODE ────────────────────────────────────────────────────
+
+  const SHEET_NAME = "LKPD Responses";
+
+  function doGet(e) {
+    try {
+      const ss = SpreadsheetApp.getActiveSpreadsheet();
+      let sheet = ss.getSheetByName(SHEET_NAME);
+
+      // Create sheet + header row if not exists
+      if (!sheet) {
+        sheet = ss.insertSheet(SHEET_NAME);
+        const headers = [
+          "Timestamp", "Student Name",
+          "Q1","Q2","Q3","Q4","Q5","Q6","Q7","Q8","Q9","Q10",
+          "Q11","Q12","Q13","Q15","Q16","Q17","Q18"
+        ];
+        sheet.appendRow(headers);
+        sheet.getRange(1, 1, 1, headers.length)
+          .setFontWeight("bold")
+          .setBackground("#1a1410")
+          .setFontColor("#faf6ef");
+        sheet.setFrozenRows(1);
+      }
+
+      const p = e.parameter;
+      const row = [
+        p.timestamp || new Date().toISOString(),
+        p.studentName || "",
+        p.q1||"", p.q2||"", p.q3||"", p.q4||"",
+        p.q5||"", p.q6||"", p.q7||"",
+        p.q8||"", p.q9||"", p.q10||"",
+        p.q11||"", p.q12||"", p.q13||"",
+        p.q15||"", p.q16||"", p.q17||"", p.q18||""
+      ];
+      sheet.appendRow(row);
+
+      return ContentService
+        .createTextOutput(JSON.stringify({ status: "ok" }))
+        .setMimeType(ContentService.MimeType.JSON);
+
+    } catch(err) {
+      return ContentService
+        .createTextOutput(JSON.stringify({ status: "error", message: err.message }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+  }
+
+  ─────────────────────────────────────────────────────────────────
+-->
+
+</body>
+</html>
